@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - JavaScript_Basic_RestServer</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!-- 
+      Basic Information for the web app with title:-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <!--
+     ArcGIS Maps SDK for JavaScript, https://js.arcgis.com
+     For more information about the intro-mapview sample,
+     read the original sample description at developers.arcgis.com.
+     https://developers.arcgis.com/javascript/latest/sample-code/intro-mapview/
+     -->
+        <!-- 
+      Basic Information for the web app with title:
+      -->
+<title>Module 4 Assignment 2</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.29/"></script>
+
+    <script>
+            <!-- require statement to establish what is being loaded into the web page -->
+      require(["esri/Map", "esri/views/MapView","esri/widgets/Legend","esri/layers/FeatureLayer", "esri/PopupTemplate"],
+      (Map,
+      MapView,
+      Legend,
+      FeatureLayer,
+      PopupTemplate
+      ) => {
+              <!-- Declaration of the map itself being loaded including the base map -->
+        
+        const map = new Map({
+          basemap: "topo-vector"
+        });
+                  <!-- Declaration base view of the map with the specification of where  the view of the map is located and the zoom -->
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 6,
+          center:[-122.25, 37.702] // longitude, latitude
+        });
+        <!--Creation and adding of the legend ui element-->
+        view.ui.add(new Legend({ view: view }), "bottom-left");
+                <!--Creation and setting up of the pop up temple for clicking on the features in the web map -->
+
+        var popupTemplate = new PopupTemplate ({
+          title: "{GNIS_Name}",
+          content: "<p> GNIS ID: {GNIS_ID} </p>"+"<p> Area: {AreaSqKm}</p>"+"<p> Elv: {Elevation}</p>"
+        });
+                <!--Loading of the feature layer for the map using an arcgis RestServer-->
+
+        var featureLayer = new FeatureLayer({
+          url:"https://gis.water.ca.gov/arcgis/rest/services/InlandWaters/NHD_Major_Lakes_and_Reservoirs/FeatureServer",
+          outFields: ["*"],
+          popupTemplate: popupTemplate
+        });
+        <!--Adding the featyre layer into the map-->
+        map.add(featureLayer);
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
